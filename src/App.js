@@ -1,3 +1,5 @@
+import { hot } from 'react-hot-loader/root';
+
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -8,8 +10,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.js</code> and save to hot-reload.
         </p>
+        <p>By Ecoologic...</p>
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -23,4 +26,4 @@ function App() {
   );
 }
 
-export default App;
+export default hot(App);
