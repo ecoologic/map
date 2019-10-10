@@ -1,10 +1,16 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const HotReloadingApp = hot(App)
+
+hot(App);
+// TODO:  https://github.com/gaearon/react-hot-loader#hot-loaderreact-dom
+
+ReactDOM.render(<HotReloadingApp />, document.getElementById('app'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
