@@ -8,7 +8,6 @@ import * as serviceWorker from './serviceWorker';
 const HotReloadingApp = hot(App)
 
 hot(App);
-// TODO:  https://github.com/gaearon/react-hot-loader#hot-loaderreact-dom
 
 ReactDOM.render(<HotReloadingApp />, document.getElementById('app'));
 
