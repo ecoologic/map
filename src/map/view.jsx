@@ -1,15 +1,20 @@
 import React, {useContext, useEffect, useReducer} from "react"
 import {MapContext} from './map'
-import {anew} from './utils';
 
-export const MapViewContext = React.createContext({})
-export const MapViewProvider = ({ children }) => {
-    const { on, view } = useContext(MapContext)
+const ol = window.ol // TODO: npm
+
+const initialLonLat = [37.41, 48.82] // (x, y) Au: [140.0, -25.0]
+
+export const view = new ol.View({ center: ol.proj.fromLonLat(initialLonLat), zoom: 4 })
+
+export const ViewContext = React.createContext({})
+export const ViewProvider = ({ children }) => {
+    const { on } = useContext(MapContext)
 
     const reducer = (state, action) => { // could be done with useState
         switch (action.type) {
             case 'MOVE_END':
-                return anew(state, { center: state.view.getCenter() })
+                return { ...state, center: state.view.getCenter() }
             default:
                 return state
         }
@@ -23,5 +28,5 @@ export const MapViewProvider = ({ children }) => {
     const init = () => { on('moveend', moveEnd) }
     useEffect(init, [])
 
-    return <MapViewContext.Provider value={value}>{children}</MapViewContext.Provider>
+    return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
 }

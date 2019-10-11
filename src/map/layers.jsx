@@ -1,8 +1,7 @@
 import React, {useEffect, useState, useRef, useContext} from 'react'
 import {featureHelpers, MapContext} from './map';
 
-// https://openlayers.org/en/latest/examples/vector-tile-selection.html?q=mouse+position
-
+// OL 6: https://openlayers.org/en/latest/examples/vector-tile-selection.html?q=mouse+position
 const ol = window.ol
 
 const format = new ol.format.GeoJSON()

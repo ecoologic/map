@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
-import {anew} from './utils';
+import {view} from './view'
 
-const ol = window.ol
+const ol = window.ol;
 
 export const featureHelpers = {
     properties: (withFeatures) => withFeatures.getFeatures()
@@ -13,19 +13,15 @@ export const featureHelpers = {
                 cities: 'label',
                 countries: 'name'
             }[data.layerName]
-            feature.setProperties(anew(data, { name: feature.get(field) }), false)
+            feature.setProperties({ ...data, name: feature.get(field) }, false)
         })
     }
 }
-
-const initialLonLat = [37.41, 48.82] // (x, y) Au: [140.0, -25.0]
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
     const map = document._map
     const on = (eventName, callback) => map.on(eventName, callback)
-    const view = useRef(new ol.View({ center: ol.proj.fromLonLat(initialLonLat), zoom: 4 })).current
-    // TODO: useView OR define in document._map
 
     const addInteraction = (select) => map.addInteraction(select)
 
@@ -39,7 +35,7 @@ export const MapProvider = ({ children }) => {
     useRef(addLayer(new ol.layer.Tile({ source: new ol.source.OSM() })))
 
     const value = {
-        view, on, // TODO: don't expose view??
+        on,
         addLayer, removeLayer,
         addControl, removeControl,
         addInteraction }
