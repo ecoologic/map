@@ -1,3 +1,5 @@
+// TODO: hot reload broken???
+
 import React from 'react'
 import {view} from './view'
 
@@ -7,14 +9,14 @@ export const featureHelpers = {
     properties: (withFeatures) => withFeatures.getFeatures()
                                               .getArray()
                                               .map(f => f.getProperties()),
-    // Ensures every layer feature has a "name" property
+    // Ensures every layer feature has a "title" property
     init: (features, data) => {
         features.forEach((feature) => {
             const field = {
                 cities: 'label',
                 countries: 'name'
             }[data.layerName]
-            feature.setProperties({ ...data, name: feature.get(field) }, false)
+            feature.setProperties({ ...data, title: feature.get(field) }, false)
         })
     }
 }

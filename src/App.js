@@ -29,7 +29,7 @@ const Records = () => {
     const {records} = useClickRecorded();
     return <ol>
         {records.map((record, i) =>
-            <li key={i}>{record.featuresData.map(fd => fd.name).join(', ')}</li>)}
+            <li key={i}>{record.featuresData.map(fd => fd.title).join(', ')}</li>)}
     </ol>
 };
 

@@ -7,7 +7,10 @@ const ol = window.ol
 const hoverSelect = new ol.interaction.Select({ condition: ol.events.condition.pointerMove })
 const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
 
+// FIXME: it's a re-rendering issue (old ones don't get updated)
+// TODO? take it out or React, like view
 const onSelect = (select, callback) => {
+    console.log('onSelect')
     select.on('select', (ev) => {
         callback(featureHelpers.properties(ev.target))
     })
@@ -23,7 +26,10 @@ export const HoverProvider = ({ children }) => {
     const select = hoverSelect
 
     useMount('HoverProvider', () => {
-        onSelect(select, (featuresData) => setFeatureData(featuresData[0] || {}))
+        onSelect(select, (featuresData) => {
+            select.getFeatures().clear() // TODO: 
+            setFeatureData(featuresData[0] || {})
+        })
         addInteraction(select)
     }, () => removeInteraction(select))
 
