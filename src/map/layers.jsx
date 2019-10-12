@@ -1,6 +1,6 @@
-import React, {useEffect, useState, useRef, useContext} from 'react'
+import React, {useState, useRef, useContext} from 'react'
 import {featureHelpers, MapContext} from './map';
-import {unmount} from '../utils'
+import {useMount} from '../utils'
 
 // OL 6: https://openlayers.org/en/latest/examples/vector-tile-selection.html?q=mouse+position
 const ol = window.ol
@@ -35,13 +35,10 @@ export const LayerProvider = ({ context, children }) => {
     const onChangeCallback = (isVisible) => subject.setVisible(isVisible)
     const Provider = context.Provider
 
-    useEffect(() => {
-        console.log('Mounting   LayerProvider')
+    useMount('LayerProvider', () => {
         subject.setVisible(startActive)
         addLayer(subject)
-
-        return unmount('LayerProvider', () => removeLayer(subject))
-    }, [startActive, subject, addLayer, removeLayer])
+    }, () => removeLayer(subject))
 
     const value = { name, isActive, setIsActive, onChangeCallback }
     return <Provider value={value}>{children}</Provider>

@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useReducer} from "react"
+import React, {useContext, useReducer} from "react"
 import {MapContext} from './map'
+import {useMount} from "../utils";
 
 const ol = window.ol // TODO: npm
 
@@ -25,7 +26,7 @@ export const ViewProvider = ({ children }) => {
 
     const [value, dispatch] = useReducer(reducer, { view, center, moveEnd })
 
-    useEffect(() => { on('moveend', moveEnd) }, [on])
+    useMount('ViewProvider', () => { on('moveend', moveEnd) })
 
     return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
 }

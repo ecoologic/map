@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState, useReducer, useRef} from 'react';
+import React, {useContext, useState, useReducer, useRef} from 'react';
 import {featureHelpers, MapContext} from './map';
-import {unmount} from "../utils";
+import {useMount} from "../utils";
 
 const ol = window.ol
 
@@ -20,7 +20,7 @@ export const HoverProvider = ({ children }) => {
         })
         addInteraction(select)
     }
-    useEffect(init, [])
+    useMount('HoverProvider', init)
 
     const value = { featureData }
     return <HoverContext.Provider value={value}>{children}</HoverContext.Provider>
@@ -52,15 +52,13 @@ export const useClickRecorded = () => {
     const { records, addClickRecord } = useContext(ClickRecordContext)
     const select = clickSelect
 
-    useEffect(() => {
-        console.log('Mounting   useInteractionRecorded')
+    useMount('useClickRecorded', () => {
         select.on('select', (ev) => {
             const featuresData = featureHelpers.properties(ev.target)
             addClickRecord({ featuresData })
         })
         addInteraction(select)
+    }, () => removeInteraction(select))
 
-        return unmount('useClickRecorded', () => removeInteraction(select))
-    }, [select]) // addInteraction, removeInteraction, addClickRecord not included, see notes#1
     return { records }
 }

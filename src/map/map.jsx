@@ -32,7 +32,7 @@ export const MapProvider = ({ children }) => {
     const addControl = (control) => map.addControl(control)
     const removeControl = (control) => map.removeControl(control)
 
-    useRef(map.setView(view)) // Done sync, as opposed to useEffect
+    useRef(map.setView(view)) // Done sync, as opposed to useEffect // TODO: useFul??
     useRef(addLayer(new ol.layer.Tile({ source: new ol.source.OSM() })))
 
     const value = {
