@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import {view} from './view'
 
 const ol = window.ol;
@@ -18,6 +18,8 @@ export const featureHelpers = {
     }
 }
 
+const openStreetMap = new ol.layer.Tile({ source: new ol.source.OSM() })
+
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
     const map = document._map
@@ -32,8 +34,8 @@ export const MapProvider = ({ children }) => {
     const addControl = (control) => map.addControl(control)
     const removeControl = (control) => map.removeControl(control)
 
-    useRef(map.setView(view)) // Done sync, as opposed to useEffect // TODO: useFul??
-    useRef(addLayer(new ol.layer.Tile({ source: new ol.source.OSM() })))
+    map.setView(view)
+    addLayer(openStreetMap)
 
     const value = {
         on,

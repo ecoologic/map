@@ -4,15 +4,17 @@ import {useMount} from "../utils";
 
 const ol = window.ol
 
+const hoverSelect = new ol.interaction.Select({ condition: ol.events.condition.pointerMove })
+const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
+
 //////////////////////////////////////////////////////////////////////////////
 // Hover
-const hoverSelect = () => new ol.interaction.Select({ condition: ol.events.condition.pointerMove })
 
 export const HoverContext = React.createContext({})
 export const HoverProvider = ({ children }) => {
     const { addInteraction } = useContext(MapContext)
     const [featureData, setFeatureData] = useState({})
-    const select = useRef(hoverSelect()).current
+    const select = hoverSelect
 
     const init = () => {
         select.on('select', (ev) => {
@@ -28,8 +30,6 @@ export const HoverProvider = ({ children }) => {
 
 //////////////////////////////////////////////////////////////////////////////
 // Click
-const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
-
 export const ClickRecordContext = React.createContext([])
 export const ClickRecordProvider = ({ children }) => {
     const reducer = (state, action) => { // could be done with useState

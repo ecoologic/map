@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import {MapContext} from './map'
 import {useMount} from "../utils";
 
@@ -17,7 +17,7 @@ export const MouseProvider = ({ children }) => {
     const { name, startActive } = useContext(MouseContext)
     const { addControl, removeControl } = useContext(MapContext)
     const [isActive, setIsActive] = useState(!!startActive)
-    const subject = useRef(mousePosition()).current
+    const subject = mousePosition()
     const onChangeCallback = (newValue) => newValue ? addControl(subject) : removeControl(subject)
 
     useMount('MouseProvider', () => {

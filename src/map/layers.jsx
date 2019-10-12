@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import {featureHelpers, MapContext} from './map';
 import {useMount} from '../utils'
 
@@ -31,7 +31,7 @@ export const LayerProvider = ({ context, children }) => {
     const { name, geoJsonPath, startActive } = useContext(context)
     const { addLayer, removeLayer } = useContext(MapContext)
     const [isActive, setIsActive] = useState(!!startActive)
-    const subject = useRef(layerHelpers.create(name, geoJsonPath)).current
+    const subject = layerHelpers.create(name, geoJsonPath)
     const onChangeCallback = (isVisible) => subject.setVisible(isVisible)
     const Provider = context.Provider
 
