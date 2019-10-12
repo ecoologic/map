@@ -7,6 +7,7 @@ export const featureHelpers = {
     properties: (withFeatures) => withFeatures.getFeatures()
                                               .getArray()
                                               .map(f => f.getProperties()),
+    // Ensures every layer feature has a "name" property
     init: (features, data) => {
         features.forEach((feature) => {
             const field = {
@@ -18,7 +19,7 @@ export const featureHelpers = {
     }
 }
 
-const openStreetMap = new ol.layer.Tile({ source: new ol.source.OSM() })
+const openStreetMapLayer = new ol.layer.Tile({ source: new ol.source.OSM() })
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
@@ -35,7 +36,7 @@ export const MapProvider = ({ children }) => {
     const removeControl = (control) => map.removeControl(control)
 
     map.setView(view)
-    addLayer(openStreetMap)
+    addLayer(openStreetMapLayer)
 
     const value = {
         on,

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useReducer, useRef} from 'react';
+import React, {useContext, useState, useReducer} from 'react';
 import {featureHelpers, MapContext} from './map';
 import {useMount} from "../utils";
 
@@ -7,22 +7,25 @@ const ol = window.ol
 const hoverSelect = new ol.interaction.Select({ condition: ol.events.condition.pointerMove })
 const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
 
+const onSelect = (select, callback) => {
+    select.on('select', (ev) => {
+        callback(featureHelpers.properties(ev.target))
+    })
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Hover
 
 export const HoverContext = React.createContext({})
 export const HoverProvider = ({ children }) => {
-    const { addInteraction } = useContext(MapContext)
+    const { addInteraction, removeInteraction } = useContext(MapContext)
     const [featureData, setFeatureData] = useState({})
     const select = hoverSelect
 
-    const init = () => {
-        select.on('select', (ev) => {
-            setFeatureData(featureHelpers.properties(ev.target)[0] || {})
-        })
+    useMount('HoverProvider', () => {
+        onSelect(select, (featuresData) => setFeatureData(featuresData[0] || {}))
         addInteraction(select)
-    }
-    useMount('HoverProvider', init)
+    }, () => removeInteraction(select))
 
     const value = { featureData }
     return <HoverContext.Provider value={value}>{children}</HoverContext.Provider>
@@ -53,10 +56,7 @@ export const useClickRecorded = () => {
     const select = clickSelect
 
     useMount('useClickRecorded', () => {
-        select.on('select', (ev) => {
-            const featuresData = featureHelpers.properties(ev.target)
-            addClickRecord({ featuresData })
-        })
+        onSelect(select, (featuresData) => addClickRecord({ featuresData }))
         addInteraction(select)
     }, () => removeInteraction(select))
 
