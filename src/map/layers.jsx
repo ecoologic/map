@@ -36,7 +36,7 @@ export const LayerProvider = ({ context, children }) => {
     const Provider = context.Provider
 
     useEffect(() => {
-        console.log('Mounting LayerProvider')
+        console.log('Mounting   LayerProvider')
         subject.setVisible(startActive)
         addLayer(subject)
 

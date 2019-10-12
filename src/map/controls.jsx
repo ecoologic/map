@@ -21,7 +21,7 @@ export const MouseProvider = ({ children }) => {
     const onChangeCallback = (newValue) => newValue ? addControl(subject) : removeControl(subject)
 
     useEffect(() => {
-        console.log('Mounting MouseProvider')
+        console.log('Mounting   MouseProvider')
         if(startActive) addControl(subject)
 
         return unmount('MouseProvider', () => removeControl(subject))

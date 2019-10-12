@@ -24,6 +24,7 @@ export const MapProvider = ({ children }) => {
     const on = (eventName, callback) => map.on(eventName, callback)
 
     const addInteraction = (select) => map.addInteraction(select)
+    const removeInteraction = (select) => map.removeInteraction(select)
 
     const addLayer = (layer) => map.addLayer(layer)
     const removeLayer = (layer) => map.removeLayer(layer)
@@ -38,6 +39,6 @@ export const MapProvider = ({ children }) => {
         on,
         addLayer, removeLayer,
         addControl, removeControl,
-        addInteraction }
+        addInteraction, removeInteraction }
     return <MapContext.Provider value={value}>{children}</MapContext.Provider>
 }

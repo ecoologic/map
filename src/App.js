@@ -1,5 +1,6 @@
 // TODO: error boundary
-
+// TODO: pass params from provider
+// TODO: lat/lon like mouse control
 import React, {useContext} from 'react'
 import {MapProvider} from './map/map'
 import {LayerProvider, CountriesContext, CitiesContext} from './map/layers'
@@ -12,8 +13,6 @@ import {
 } from './map/interactions';
 import {MouseContext, MouseProvider} from './map/controls';
 
-// TODO: pass params from provider
-// TODO: lat/lon like mouse control
 const ViewCenter = () => {
     const {center} = useContext(ViewContext);
     const [x, y] = center.map((n) => Math.round(n * 10000) / 10000);
