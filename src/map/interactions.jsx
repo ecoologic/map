@@ -4,37 +4,13 @@ import {useMount} from "../utils";
 
 const ol = window.ol
 
-const hoverSelect = new ol.interaction.Select({ condition: ol.events.condition.pointerMove })
 const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
 
-// FIXME: it's a re-rendering issue (old ones don't get updated)
-// TODO? take it out or React, like view
 const onSelect = (select, callback) => {
     console.log('onSelect')
     select.on('select', (ev) => {
         callback(featureHelpers.properties(ev.target))
     })
-}
-
-//////////////////////////////////////////////////////////////////////////////
-// Hover
-
-export const HoverContext = React.createContext({})
-export const HoverProvider = ({ children }) => {
-    const { addInteraction, removeInteraction } = useContext(MapContext)
-    const [featureData, setFeatureData] = useState({})
-    const select = hoverSelect
-
-    useMount('HoverProvider', () => {
-        onSelect(select, (featuresData) => {
-            select.getFeatures().clear() // TODO: 
-            setFeatureData(featuresData[0] || {})
-        })
-        addInteraction(select)
-    }, () => removeInteraction(select))
-
-    const value = { featureData }
-    return <HoverContext.Provider value={value}>{children}</HoverContext.Provider>
 }
 
 //////////////////////////////////////////////////////////////////////////////

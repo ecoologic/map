@@ -1,15 +1,20 @@
+// TODO: restructure files by DOMAIN
 // TODO: error boundary
 // TODO: pass params from provider
 // TODO: lat/lon like mouse control
 import React, {useContext} from 'react'
 import {MapProvider} from './map/map'
-import {LayerProvider, CountriesContext, CitiesContext} from './map/layers'
+import {
+    LayerProvider,
+    CountriesContext,
+    CitiesContext,
+    HoverContext,
+    HoverProvider,
+} from './map/layers'
 import {ViewContext, ViewProvider} from './map/view';
 import {
     ClickRecordProvider,
     useClickRecorded,
-    HoverContext,
-    HoverProvider,
 } from './map/interactions';
 import {MouseContext, MouseProvider} from './map/controls';
 
@@ -63,7 +68,7 @@ const App = () => {
         <ActivatableContext Provider={MouseProvider} Context={MouseContext}/>
 
         <HoverProvider>
-            <HoveredCountry/>
+            <HoveredCountry />
         </HoverProvider>
 
         <ClickRecordProvider>
