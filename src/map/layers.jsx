@@ -2,7 +2,6 @@ import React, {useState, useContext} from 'react'
 import {featureHelpers, MapContext} from './map';
 import {identity, useMount} from '../utils'
 
-// OL 6: https://openlayers.org/en/latest/examples/vector-tile-selection.html?q=mouse+position
 const ol = window.ol
 
 const format = new ol.format.GeoJSON()
@@ -64,20 +63,20 @@ const updateHoveredFeature = (feature) => {
 
 export const HoverContext = React.createContext({})
 export const HoverProvider = ({ children }) => {
-    const { addLayer, removeLayer } = useContext(MapContext)
+    const { addLayer, removeLayer, on, getEventPixel, forEachFeatureAtPixel } = useContext(MapContext)
     const [featureData, setFeatureData] = useState({})
 
     useMount('HoverProvider', () => {
-        document._map.on('pointermove', function(ev) {
+        on('pointermove', function(ev) {
             if (ev.dragging) { return }
-            const pixel = document._map.getEventPixel(ev.originalEvent)
-            const feature = document._map.forEachFeatureAtPixel(pixel, identity)
+
+            const pixel = getEventPixel(ev.originalEvent)
+            const feature = forEachFeatureAtPixel(pixel, identity)
             if (feature === hoveredFeature || !feature) { return }
 
             updateHoveredFeature(feature)
-            const featureData = feature.getProperties();
-            setFeatureData(featureData || {})
-        });
+            setFeatureData(feature.getProperties())
+        })
         addLayer(hoverLayer)
     }, () => removeLayer(hoverLayer))
 

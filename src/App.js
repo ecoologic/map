@@ -1,7 +1,9 @@
+// TODO: toggle layers
 // TODO: restructure files by DOMAIN
-// TODO: error boundary
+// TODO: FIX hot-reload
 // TODO: pass params from provider
-// TODO: lat/lon like mouse control
+// TODO: use package.json for OL
+// TODO: import paths relative to root
 import React, {useContext} from 'react'
 import {MapProvider} from './map/map'
 import {
@@ -53,7 +55,7 @@ const ActivationCheckbox = ({context}) => {
 
 const ActivatableContext = ({Provider, Context}) => {
     return <Provider context={Context}>
-        <ActivationCheckbox context={Context}/>
+        <p><ActivationCheckbox context={Context}/></p>
     </Provider>
 };
 

@@ -1,5 +1,3 @@
-// TODO: hot reload broken???
-
 import React from 'react'
 import {view} from './view'
 
@@ -27,6 +25,8 @@ export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
     const map = document._map
     const on = (eventName, callback) => map.on(eventName, callback)
+    const getEventPixel = (pixel) => map.getEventPixel(pixel)
+    const forEachFeatureAtPixel = (pixel, callback, opt_options) => map.forEachFeatureAtPixel(pixel, callback, opt_options)
 
     const addInteraction = (select) => map.addInteraction(select)
     const removeInteraction = (select) => map.removeInteraction(select)
@@ -41,7 +41,7 @@ export const MapProvider = ({ children }) => {
     addLayer(openStreetMapLayer)
 
     const value = {
-        on,
+        on, getEventPixel, forEachFeatureAtPixel,
         addLayer, removeLayer,
         addControl, removeControl,
         addInteraction, removeInteraction }

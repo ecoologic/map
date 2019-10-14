@@ -1,4 +1,4 @@
-import React, {useContext, useState, useReducer} from 'react';
+import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './map';
 import {useMount} from "../utils";
 
@@ -6,8 +6,7 @@ const ol = window.ol
 
 const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
 
-const onSelect = (select, callback) => {
-    console.log('onSelect')
+const onSelectFeature = (select, callback) => {
     select.on('select', (ev) => {
         callback(featureHelpers.properties(ev.target))
     })
@@ -38,7 +37,7 @@ export const useClickRecorded = () => {
     const select = clickSelect
 
     useMount('useClickRecorded', () => {
-        onSelect(select, (featuresData) => addClickRecord({ featuresData }))
+        onSelectFeature(select, (featuresData) => addClickRecord({ featuresData }))
         addInteraction(select)
     }, () => removeInteraction(select))
 

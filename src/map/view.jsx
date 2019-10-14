@@ -2,11 +2,11 @@ import React, {useContext, useReducer} from "react"
 import {MapContext} from './map'
 import {useMount} from "../utils";
 
-const ol = window.ol // TODO: npm
+const ol = window.ol;
 
-const initialLonLat = [37.41, 48.82] // (x, y) Au: [140.0, -25.0]
+const initialLonLat = [37.41, 48.82]; // (x, y) Au: [140.0, -25.0]
 
-export const view = new ol.View({ center: ol.proj.fromLonLat(initialLonLat), zoom: 3 })
+export const view = new ol.View({ center: ol.proj.fromLonLat(initialLonLat), zoom: 3 });
 
 export const ViewContext = React.createContext({})
 export const ViewProvider = ({ children }) => {
