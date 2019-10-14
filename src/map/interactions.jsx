@@ -1,3 +1,4 @@
+// TODO: rename ClickRecordProvider
 import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './map';
 import {useMount} from "../utils";

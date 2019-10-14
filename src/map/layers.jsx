@@ -1,4 +1,5 @@
-import React, {useState, useContext} from 'react'
+// TODO: CountriesProvider, CitiesProvider, HoverProvider
+import React, {useState, useContext, useRef} from 'react'
 import {featureHelpers, MapContext} from './map';
 import {identity, useMount} from '../utils'
 
@@ -26,12 +27,16 @@ export const CitiesContext = React.createContext({
     startActive: false
 })
 
+// TODO: active -> visible
 export const LayerProvider = ({ context, children }) => {
     const { name, geoJsonPath, startActive } = useContext(context)
     const { addLayer, removeLayer } = useContext(MapContext)
     const [isActive, setIsActive] = useState(!!startActive)
-    const subject = layerHelpers.create(name, geoJsonPath)
-    const onChangeCallback = (isVisible) => subject.setVisible(isVisible)
+    const subject = useRef(layerHelpers.create(name, geoJsonPath)).current
+    const onChangeCallback = (isVisible) => {
+        subject.setVisible(isVisible)
+        setIsActive(isVisible)
+    }
     const Provider = context.Provider
 
     useMount('LayerProvider', () => {
@@ -39,7 +44,7 @@ export const LayerProvider = ({ context, children }) => {
         addLayer(subject)
     }, () => removeLayer(subject))
 
-    const value = { name, isActive, setIsActive, onChangeCallback }
+    const value = { name, isActive, onChangeCallback }
     return <Provider value={value}>{children}</Provider>
 }
 

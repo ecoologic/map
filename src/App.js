@@ -1,9 +1,20 @@
-// TODO: toggle layers
-// TODO: restructure files by DOMAIN
-// TODO: FIX hot-reload
-// TODO: pass params from provider
 // TODO: use package.json for OL
+// TODO: FIX hot-reload
+// TODO: check mouse control
+// TODO: restructure files by DOMAIN
+// TODO: pass params from provider
 // TODO: import paths relative to root
+// TODO: why I need to define every function in MapProvider?
+// TODO: licence
+// TODO: header and footer
+// TODO: some CSS FFS
+// https://jsfiddle.net/AliBassam/eyepyzrp/
+// var newParent = document.getElementById('new-parent');
+// var oldParent = document.getElementById('old-parent');
+//
+// while (oldParent.childNodes.length > 0) {
+//     newParent.appendChild(oldParent.childNodes[0]);
+// }
 import React, {useContext} from 'react'
 import {MapProvider} from './map/map'
 import {
@@ -41,11 +52,8 @@ const Records = () => {
 };
 
 const ActivationCheckbox = ({context}) => {
-    const {name, isActive, setIsActive, onChangeCallback} = useContext(context);
-    const onChange = (ev) => {
-        setIsActive(ev.target.checked);
-        onChangeCallback(ev.target.checked, ev)
-    };
+    const {name, isActive, onChangeCallback} = useContext(context);
+    const onChange = (ev) => onChangeCallback(ev.target.checked);
 
     return <label>
         {name}:

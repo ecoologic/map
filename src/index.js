@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+document._map = new window.ol.Map({ target: 'map' })
+
 const HotReloadingApp = hot(App)
 
 hot(App);
