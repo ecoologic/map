@@ -1,7 +1,7 @@
 import React from 'react'
 import {view} from './view'
-
-const ol = window.ol;
+import {Tile} from "ol/layer";
+import OSM from "ol/source/OSM";
 
 export const featureHelpers = {
     properties: (withFeatures) => withFeatures.getFeatures()
@@ -19,7 +19,7 @@ export const featureHelpers = {
     }
 }
 
-const openStreetMapLayer = new ol.layer.Tile({ source: new ol.source.OSM() })
+const openStreetMapLayer = new Tile({ source: new OSM() })
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {

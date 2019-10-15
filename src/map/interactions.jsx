@@ -2,10 +2,10 @@
 import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './map';
 import {useMount} from "../utils";
+import Select from "ol/interaction/Select";
+import {click} from "ol/events/condition";
 
-const ol = window.ol
-
-const clickSelect = new ol.interaction.Select({ condition: ol.events.condition.click })
+const clickSelect = new Select({ condition: click })
 
 const onSelectFeature = (select, callback) => {
     select.on('select', (ev) => {

@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import 'ol/ol.css';
+import {Map} from 'ol';
 
-document._map = new window.ol.Map({ target: 'map' })
+document._map = new Map({ target: 'map' })
 
 const HotReloadingApp = hot(App)
 

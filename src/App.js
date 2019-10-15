@@ -1,6 +1,4 @@
-// TODO: use package.json for OL
 // TODO: FIX hot-reload
-// TODO: check mouse control
 // TODO: restructure files by DOMAIN
 // TODO: pass params from provider
 // TODO: import paths relative to root

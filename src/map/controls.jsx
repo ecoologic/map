@@ -2,13 +2,13 @@
 import React, {useState, useContext} from 'react'
 import {MapContext} from './map'
 import {useMount} from "../utils";
-
-const ol = window.ol
+import MousePosition from "ol/control/MousePosition";
+import {createStringXY} from "ol/coordinate";
 
 const undefinedHTML = '&nbsp;'
 
-const mousePosition = new ol.control.MousePosition({
-    coordinateFormat: ol.coordinate.createStringXY(4),
+const mousePosition = new MousePosition({
+    coordinateFormat: createStringXY(4),
     undefinedHTML })
 
 export const MouseContext = React.createContext({ name: 'mouse', startActive: true })

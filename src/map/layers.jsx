@@ -2,17 +2,20 @@
 import React, {useState, useContext, useRef} from 'react'
 import {featureHelpers, MapContext} from './map';
 import {identity, useMount} from '../utils'
+import GeoJSON from "ol/format/GeoJSON";
+import VectorSource from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import Style from "ol/style/Style";
+import Fill from "ol/style/Fill";
 
-const ol = window.ol
-
-const format = new ol.format.GeoJSON()
+const format = new GeoJSON()
 
 const layerHelpers = {
     create: (layerName, url) => {
         // overlaps: false for performance, see: https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html
-        const source = new ol.source.Vector({ url, format, overlaps: false })
+        const source = new VectorSource({ url, format, overlaps: false })
         source.once('change', () => featureHelpers.init(source.getFeatures(), { layerName }))
-        return new ol.layer.Vector({ source, className: layerName })
+        return new VectorLayer({ source, className: layerName })
     }
 }
 
@@ -51,9 +54,9 @@ export const LayerProvider = ({ context, children }) => {
 //////////////////////////////////////////////////////////////////////////////
 // Hover
 
-const hoverLayer = new ol.layer.Vector({
-    source: new ol.source.Vector(),
-    style: new ol.style.Style({ fill: new ol.style.Fill({ color: 'rgba(0,255,0,0.1)' }) })
+const hoverLayer = new VectorLayer({
+    source: new VectorSource(),
+    style: new Style({ fill: new Fill({ color: 'rgba(0,255,0,0.1)' }) })
 })
 
 let hoveredFeature;
