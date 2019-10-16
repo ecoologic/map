@@ -11,7 +11,7 @@ import {
 } from './map/ClickRecord';
 import {MousePositionContext, MousePositionProvider} from './map/MousePosition';
 import {HoveredCountry, HoverProvider} from "./map/Hover";
-import {ActivatableContext} from "./utils/Activatable";
+import {ActivatableContext} from "./utils";
 
 const App = () => {
     return <MapProvider>
