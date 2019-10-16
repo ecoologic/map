@@ -10,6 +10,7 @@ export const view = new View({ center: fromLonLat(initialLonLat), zoom: 3 });
 
 export const ViewContext = React.createContext({})
 export const ViewProvider = ({ children }) => {
+    console.log(`Render ViewProvider`)
     const { on } = useContext(MapContext)
 
     const reducer = (state, action) => { // could be done with useState
@@ -32,6 +33,7 @@ export const ViewProvider = ({ children }) => {
 }
 
 export const ViewCenter = () => {
+    console.log(`Render ViewCenter`)
     const {center} = useContext(ViewContext);
     const [x, y] = center.map((n) => Math.round(n * 10000) / 10000);
 

@@ -1,10 +1,10 @@
 ## TODO
 
+* TODO: header and footer https://jsfiddle.net/AliBassam/eyepyzrp/
 * TODO: pass params from provider
 * TODO: import paths relative to root
 * TODO: why I need to define every function in MapProvider?
 * TODO: licence
-* TODO: header and footer https://jsfiddle.net/AliBassam/eyepyzrp/
 * TODO: some CSS FFS
 
 ---

@@ -28,6 +28,7 @@ export const CitiesContext = React.createContext({
 })
 
 export const LayerProvider = ({ context, children }) => {
+    console.log(`Render LayerProvider`)
     const { name, geoJsonPath, startVisible } = useContext(context)
     const { addLayer, removeLayer } = useContext(MapContext)
     const [isVisible, setIsVisible] = useState(!!startVisible)

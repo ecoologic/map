@@ -4,10 +4,10 @@ export const identity = (args) => args
 
 export const useMount = (subjectName, mount, unmount = identity) => {
     const init = () => {
-        console.log(`Mounting   ${subjectName}`)
+        console.log(`Mount  ${subjectName}`)
         mount()
         return () => {
-            console.log(`Unmounting ${subjectName}`)
+            console.log(`Unmount ${subjectName}`)
             unmount()
         }
     }
