@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -9,11 +8,7 @@ import {Map} from 'ol';
 
 document._map = new Map({ target: 'map' })
 
-const HotReloadingApp = hot(App)
-
-hot(App);
-
-ReactDOM.render(<HotReloadingApp />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
