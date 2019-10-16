@@ -25,7 +25,7 @@ const openStreetMapLayer = new Tile({ source: new OSM() })
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
-    console.log(`Render MapProvider`)
+    console.debug(`Render MapProvider`)
     const on = (eventName, callback) => map.on(eventName, callback)
     const getEventPixel = (pixel) => map.getEventPixel(pixel)
     const forEachFeatureAtPixel = (pixel, callback, opt_options) => map.forEachFeatureAtPixel(pixel, callback, opt_options)

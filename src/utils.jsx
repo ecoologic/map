@@ -20,10 +20,10 @@ export const ActivatableContext = ({Provider, Context}) => {
 
 export const useMount = (subjectName, mount, unmount = identity) => {
     const init = () => {
-        console.log(`Mount  ${subjectName}`)
+        console.debug(`Mount  ${subjectName}`)
         mount()
         return () => {
-            console.log(`Unmount ${subjectName}`)
+            console.debug(`Unmount ${subjectName}`)
             unmount()
         }
     }

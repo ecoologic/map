@@ -23,7 +23,7 @@ const updateHoveredFeature = (feature) => {
 
 export const HoverContext = React.createContext({})
 export const HoverProvider = ({ children }) => {
-    // console.log(`Render HoverProvider`)
+    // console.debug(`Render HoverProvider`)
     const { addLayer, removeLayer, on, getEventPixel, forEachFeatureAtPixel } = useContext(MapContext)
     const [featureData, setFeatureData] = useState({})
 
@@ -46,7 +46,7 @@ export const HoverProvider = ({ children }) => {
 }
 
 export const HoveredCountry = () => {
-    // console.log(`Render HoveredCountry`)
+    // console.debug(`Render HoveredCountry`)
     const {featureData} = useContext(HoverContext);
     return <div>Country: {featureData.name}</div>
 }

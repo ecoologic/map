@@ -14,7 +14,7 @@ const onSelectFeature = (select, callback) => {
 
 export const ClickRecordContext = React.createContext([])
 export const ClickRecordProvider = ({ children }) => {
-    console.log(`Render ClickRecordProvider`)
+    console.debug(`Render ClickRecordProvider`)
     const reducer = (state, action) => { // could be done with useState
         switch (action.type) {
             case 'CLICK':
@@ -31,7 +31,7 @@ export const ClickRecordProvider = ({ children }) => {
 }
 
 export const useClickRecord = () => {
-    console.log(`Render useClickRecord`)
+    console.debug(`Render useClickRecord`)
     const { addInteraction, removeInteraction } = useContext(MapContext)
     const { records, addClickRecord } = useContext(ClickRecordContext)
     const select = clickSelect
@@ -45,7 +45,7 @@ export const useClickRecord = () => {
 }
 
 export const Records = () => {
-    console.log(`Render Records`)
+    console.debug(`Render Records`)
     const {records} = useClickRecord();
     return <ol>
         {records.map((record, i) =>
