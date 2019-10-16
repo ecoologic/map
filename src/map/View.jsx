@@ -1,5 +1,5 @@
 import React, {useContext, useReducer} from "react"
-import {MapContext} from './map'
+import {MapContext} from './Map'
 import {useMount} from "../utils";
 import {fromLonLat} from "ol/proj";
 import View from "ol/View";
@@ -29,4 +29,11 @@ export const ViewProvider = ({ children }) => {
     useMount('ViewProvider', () => { on('moveend', moveEnd) })
 
     return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
+}
+
+export const ViewCenter = () => {
+    const {center} = useContext(ViewContext);
+    const [x, y] = center.map((n) => Math.round(n * 10000) / 10000);
+
+    return <div>View Center: {x}, {y}</div>
 }

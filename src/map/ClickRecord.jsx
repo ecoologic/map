@@ -1,6 +1,5 @@
-// TODO: rename ClickRecordProvider
 import React, {useContext, useReducer} from 'react';
-import {featureHelpers, MapContext} from './map';
+import {featureHelpers, MapContext} from './Map';
 import {useMount} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
@@ -13,8 +12,6 @@ const onSelectFeature = (select, callback) => {
     })
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// Click
 export const ClickRecordContext = React.createContext([])
 export const ClickRecordProvider = ({ children }) => {
     const reducer = (state, action) => { // could be done with useState
@@ -32,15 +29,23 @@ export const ClickRecordProvider = ({ children }) => {
     return <ClickRecordContext.Provider value={value}>{children}</ClickRecordContext.Provider>
 }
 
-export const useClickRecorded = () => {
+export const useClickRecord = () => {
     const { addInteraction, removeInteraction } = useContext(MapContext)
     const { records, addClickRecord } = useContext(ClickRecordContext)
     const select = clickSelect
 
-    useMount('useClickRecorded', () => {
+    useMount('useClickRecord', () => {
         onSelectFeature(select, (featuresData) => addClickRecord({ featuresData }))
         addInteraction(select)
     }, () => removeInteraction(select))
 
     return { records }
+}
+
+export const Records = () => {
+    const {records} = useClickRecord();
+    return <ol>
+        {records.map((record, i) =>
+            <li key={i}>{record.featuresData.map(fd => fd.title).join(', ')}</li>)}
+    </ol>
 }

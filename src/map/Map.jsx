@@ -1,6 +1,6 @@
 import React from 'react'
 import {Map} from 'ol';
-import {view} from './view'
+import {view} from './View'
 import {Tile} from "ol/layer";
 import OSM from "ol/source/OSM";
 

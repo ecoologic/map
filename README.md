@@ -1,3 +1,14 @@
+## TODO
+
+* TODO: pass params from provider
+* TODO: import paths relative to root
+* TODO: why I need to define every function in MapProvider?
+* TODO: licence
+* TODO: header and footer https://jsfiddle.net/AliBassam/eyepyzrp/
+* TODO: some CSS FFS
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -14,7 +25,7 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
+Launches the test runner in the intervisible watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
