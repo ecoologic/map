@@ -1,4 +1,5 @@
 import React from 'react'
+import {Map} from 'ol';
 import {view} from './view'
 import {Tile} from "ol/layer";
 import OSM from "ol/source/OSM";
@@ -19,11 +20,11 @@ export const featureHelpers = {
     }
 }
 
+const map = new Map({ target: 'map' })
 const openStreetMapLayer = new Tile({ source: new OSM() })
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
-    const map = document._map
     const on = (eventName, callback) => map.on(eventName, callback)
     const getEventPixel = (pixel) => map.getEventPixel(pixel)
     const forEachFeatureAtPixel = (pixel, callback, opt_options) => map.forEachFeatureAtPixel(pixel, callback, opt_options)

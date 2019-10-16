@@ -1,4 +1,3 @@
-// TODO: FIX hot-reload
 // TODO: restructure files by DOMAIN
 // TODO: pass params from provider
 // TODO: import paths relative to root
@@ -65,8 +64,8 @@ const ActivatableContext = ({Provider, Context}) => {
     </Provider>
 };
 
-const App = () => {
-    return <MapProvider>
+const App = ({map}) => {
+    return <MapProvider map={map}>
         <ViewProvider>
             <ViewCenter/>
         </ViewProvider>
