@@ -14,23 +14,32 @@ import {HoveredCountry, HoverProvider} from "./map/Hover";
 import {ActivatableContext} from "./utils";
 
 const App = () => {
-    return <MapProvider>
-        <ViewProvider>
-            <ViewCenter />
-        </ViewProvider>
+    return <>
+        <header className="header">
+            HEAAAAAAAAAAAAAAAAAAAAAAADER
+        </header>
+        <MapProvider>
+            <ViewProvider>
+                <ViewCenter />
+            </ViewProvider>
 
-        <ActivatableContext Provider={LayerProvider} Context={CountriesContext}/>
-        <ActivatableContext Provider={LayerProvider} Context={CitiesContext}/>
-        <ActivatableContext Provider={MousePositionProvider} Context={MousePositionContext}/>
+            <ActivatableContext Provider={LayerProvider} Context={CountriesContext}/>
+            <ActivatableContext Provider={LayerProvider} Context={CitiesContext}/>
+            <ActivatableContext Provider={MousePositionProvider} Context={MousePositionContext}/>
 
-        <HoverProvider>
-            <HoveredCountry />
-        </HoverProvider>
+            <HoverProvider>
+                <HoveredCountry />
+            </HoverProvider>
 
-        <ClickRecordProvider>
-            <Records/>
-        </ClickRecordProvider>
-    </MapProvider>
+            <ClickRecordProvider>
+                <Records/>
+            </ClickRecordProvider>
+        </MapProvider>
+        <footer className="footer">
+            FOOOOOOOOOOOOOOOOOOOOOOOOOOTER
+        </footer>
+    </>
 };
 
 export default App
+

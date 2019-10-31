@@ -3,6 +3,7 @@ import {Map} from 'ol';
 import {view} from './View'
 import {Tile} from "ol/layer";
 import OSM from "ol/source/OSM";
+import {useMount} from "../utils";
 
 export const featureHelpers = {
     properties: (withFeatures) => withFeatures.getFeatures()
@@ -20,7 +21,7 @@ export const featureHelpers = {
     }
 }
 
-const map = new Map({ target: 'map' })
+const map = new Map({ target: null })
 const openStreetMapLayer = new Tile({ source: new OSM() })
 
 export const MapContext = React.createContext({})
@@ -42,10 +43,17 @@ export const MapProvider = ({ children }) => {
     map.setView(view)
     addLayer(openStreetMapLayer)
 
+    useMount('MapProvider', () => {
+        map.setTarget('map')
+    })
+
     const value = {
         on, getEventPixel, forEachFeatureAtPixel,
         addLayer, removeLayer,
         addControl, removeControl,
         addInteraction, removeInteraction }
-    return <MapContext.Provider value={value}>{children}</MapContext.Provider>
+    return <MapContext.Provider value={value}>
+        <div id="map" />
+        {children}
+    </MapContext.Provider>
 }
