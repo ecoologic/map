@@ -7,6 +7,16 @@
 * TODO: licence
 * TODO: some CSS FFS
 
+# A Map App
+
+## Setup
+
+```
+docker-compose up --build # First run
+docker-compose run app
+
+```
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
