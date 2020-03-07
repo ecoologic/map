@@ -16,7 +16,7 @@ import {ActivatableContext} from "./utils";
 const App = () => {
     return <>
         <header className="header">
-            HEAAAAAAAAAAAAAAAAAAAAAAADER
+            ===
         </header>
         <MapProvider>
             <ViewProvider>
@@ -26,17 +26,16 @@ const App = () => {
             <ActivatableContext Provider={LayerProvider} Context={CountriesContext}/>
             <ActivatableContext Provider={LayerProvider} Context={CitiesContext}/>
             <ActivatableContext Provider={MousePositionProvider} Context={MousePositionContext}/>
-
             <HoverProvider>
                 <HoveredCountry />
+                <ClickRecordProvider>
+                    <Records/>
+                </ClickRecordProvider>
             </HoverProvider>
 
-            <ClickRecordProvider>
-                <Records/>
-            </ClickRecordProvider>
         </MapProvider>
         <footer className="footer">
-            FOOOOOOOOOOOOOOOOOOOOOOOOOOTER
+            ---
         </footer>
     </>
 };

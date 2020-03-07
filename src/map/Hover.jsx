@@ -21,6 +21,7 @@ const updateHoveredFeature = (feature) => {
     hoveredFeature = feature
 }
 
+// TODO? MapHoverContext
 export const HoverContext = React.createContext({})
 export const HoverProvider = ({ children }) => {
     // console.debug(`Render HoverProvider`)

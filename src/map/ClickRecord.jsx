@@ -3,6 +3,7 @@ import {featureHelpers, MapContext} from './Map';
 import {useMount} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
+import {HoverContext} from "./Hover";
 
 const clickSelect = new Select({ condition: click })
 
@@ -44,11 +45,22 @@ export const useClickRecord = () => {
     return { records }
 }
 
+const FeaturedTr = ({ ol_uid, children }) => {
+    console.debug(`Render FeaturedTr`)
+    const hoveredOlUid = useContext(HoverContext).featureData?.geometry?.ol_uid;
+    const highlighted = hoveredOlUid === ol_uid;
+    return <tr className={highlighted ? 'highlighted' : '' }>{children}</tr>
+}
+
 export const Records = () => {
     console.debug(`Render Records`)
     const {records} = useClickRecord();
-    return <ol>
-        {records.map((record, i) =>
-            <li key={i}>{record.featuresData.map(fd => fd.title).join(', ')}</li>)}
-    </ol>
+    return <table><tbody>
+        {records.map((record) =>
+            <FeaturedTr key={record.featuresData[0].geometry.ol_uid}
+                        ol_uid={record.featuresData[0].geometry.ol_uid}>
+                <td>{record.featuresData.map((fd) => fd.title).join(', ')}</td>
+            </FeaturedTr>
+            )}
+    </tbody></table>
 }
