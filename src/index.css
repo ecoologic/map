@@ -13,3 +13,8 @@ code {
 }
 
 .highlighted { background-color: #DEF6D9; }
+
+.header, .footer {
+  background-color: black;
+  color: white;
+}
