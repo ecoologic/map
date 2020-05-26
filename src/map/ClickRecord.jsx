@@ -3,13 +3,14 @@ import {featureHelpers, MapContext} from './Map';
 import {useMount} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
-import {HoverContext} from "./Hover";
+import {MapHoverContext} from "./Hover";
 
+// Select only for single feature, otherwise:
+// https://openlayers.org/en/latest/examples/select-multiple-features.html
 const clickSelect = new Select({ condition: click })
 
 const onSelectFeature = (select, callback) => {
     select.on('select', (ev) => {
-        console.log('select select', select)
         callback(featureHelpers.properties(ev.target))
     })
 }
@@ -47,10 +48,10 @@ export const useClickRecord = () => {
 }
 
 // TODO: tr to map hover
-const FeaturedTr = ({ ol_uid, children }) => {
+const FeaturedTr = ({ olUid, children }) => {
     console.debug(`Render FeaturedTr`)
-    const hoveredOlUid = useContext(HoverContext).featureData?.geometry?.ol_uid;
-    const hoveredOnMap = hoveredOlUid === ol_uid;
+    const hoveredOlUid = useContext(MapHoverContext).featureData?.geometry?.ol_uid;
+    const hoveredOnMap = hoveredOlUid === olUid;
     return <tr className={hoveredOnMap ? 'highlighted' : '' }>{children}</tr>
 }
 
@@ -60,7 +61,7 @@ export const Records = () => {
     return <table><tbody>
         {records.map((record, i) =>
             <FeaturedTr key={`${i}-${record.featuresData[0].geometry.ol_uid}`}
-                        ol_uid={record.featuresData[0].geometry.ol_uid}>
+                        olUid={record.featuresData[0].geometry.ol_uid}>
                 <td>{record.featuresData.map((fd) => fd.title).join(', ')}</td>
             </FeaturedTr>
         )}
