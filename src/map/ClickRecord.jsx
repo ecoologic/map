@@ -9,6 +9,7 @@ const clickSelect = new Select({ condition: click })
 
 const onSelectFeature = (select, callback) => {
     select.on('select', (ev) => {
+        console.log('select select', select)
         callback(featureHelpers.properties(ev.target))
     })
 }
@@ -16,7 +17,7 @@ const onSelectFeature = (select, callback) => {
 export const ClickRecordContext = React.createContext([])
 export const ClickRecordProvider = ({ children }) => {
     console.debug(`Render ClickRecordProvider`)
-    const reducer = (state, action) => { // could be done with useState
+    const reducer = (state, action) => { // Could be done with useState
         switch (action.type) {
             case 'CLICK':
                 return [...state, action.record]
@@ -45,22 +46,23 @@ export const useClickRecord = () => {
     return { records }
 }
 
+// TODO: tr to map hover
 const FeaturedTr = ({ ol_uid, children }) => {
     console.debug(`Render FeaturedTr`)
     const hoveredOlUid = useContext(HoverContext).featureData?.geometry?.ol_uid;
-    const highlighted = hoveredOlUid === ol_uid;
-    return <tr className={highlighted ? 'highlighted' : '' }>{children}</tr>
+    const hoveredOnMap = hoveredOlUid === ol_uid;
+    return <tr className={hoveredOnMap ? 'highlighted' : '' }>{children}</tr>
 }
 
 export const Records = () => {
     console.debug(`Render Records`)
     const {records} = useClickRecord();
     return <table><tbody>
-        {records.map((record) =>
-            <FeaturedTr key={record.featuresData[0].geometry.ol_uid}
+        {records.map((record, i) =>
+            <FeaturedTr key={`${i}-${record.featuresData[0].geometry.ol_uid}`}
                         ol_uid={record.featuresData[0].geometry.ol_uid}>
                 <td>{record.featuresData.map((fd) => fd.title).join(', ')}</td>
             </FeaturedTr>
-            )}
+        )}
     </tbody></table>
 }

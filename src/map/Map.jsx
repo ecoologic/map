@@ -28,8 +28,9 @@ export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
     console.debug(`Render MapProvider`)
     const on = (eventName, callback) => map.on(eventName, callback)
-    const getEventPixel = (pixel) => map.getEventPixel(pixel)
-    const forEachFeatureAtPixel = (pixel, callback, opt_options) => map.forEachFeatureAtPixel(pixel, callback, opt_options)
+    const featureForEvent = (olEvent) =>
+        map.forEachFeatureAtPixel(map.getEventPixel(olEvent.originalEvent),
+                                  (feature, _layer) => feature)
 
     const addInteraction = (select) => map.addInteraction(select)
     const removeInteraction = (select) => map.removeInteraction(select)
@@ -48,7 +49,7 @@ export const MapProvider = ({ children }) => {
     })
 
     const value = {
-        on, getEventPixel, forEachFeatureAtPixel,
+        on, featureForEvent,
         addLayer, removeLayer,
         addControl, removeControl,
         addInteraction, removeInteraction }
