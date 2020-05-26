@@ -4,8 +4,6 @@ import {useMount} from '../utils'
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
-import { Style, Fill, Stroke } from 'ol/style';
-import Circle from 'ol/geom/Circle';
 
 const format = new GeoJSON()
 
@@ -14,6 +12,7 @@ const layerHelpers = {
         // overlaps: false for performance, see: https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html
         const source = new VectorSource({ url, format, overlaps: false })
         source.once('change', () => featureHelpers.init(source.getFeatures(), { layerName }))
+
         return new VectorLayer({ source, className: layerName })
     }
 }

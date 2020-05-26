@@ -1,14 +1,13 @@
 import React, {useContext, useState} from 'react'
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import Style from "ol/style/Style";
 import {MapContext} from "./Map";
 import {identity, useMount} from "../utils";
-import { fills } from './styles';
+import { styles } from './styles';
 
 const hoverLayer = new VectorLayer({
     source: new VectorSource(),
-    style: new Style({ fill: fills.green })
+    style: styles.filledGreen
 })
 
 let hoveredFeature;
