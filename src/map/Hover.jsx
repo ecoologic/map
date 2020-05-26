@@ -2,13 +2,13 @@ import React, {useContext, useState} from 'react'
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import Style from "ol/style/Style";
-import Fill from "ol/style/Fill";
 import {MapContext} from "./Map";
 import {identity, useMount} from "../utils";
+import { fills } from './styles';
 
 const hoverLayer = new VectorLayer({
     source: new VectorSource(),
-    style: new Style({ fill: new Fill({ color: 'rgba(0,255,0,0.1)' }) })
+    style: new Style({ fill: fills.green })
 })
 
 let hoveredFeature;
@@ -51,4 +51,3 @@ export const HoveredCountry = () => {
     const {featureData} = useContext(HoverContext);
     return <div>Country: {featureData.name}</div>
 }
-

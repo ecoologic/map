@@ -4,6 +4,8 @@ import {useMount} from '../utils'
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
+import { Style, Fill, Stroke } from 'ol/style';
+import Circle from 'ol/geom/Circle';
 
 const format = new GeoJSON()
 
