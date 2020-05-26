@@ -18,3 +18,9 @@ code {
   background-color: black;
   color: white;
 }
+
+/* Tailwind */
+.inline-block	{ display: inline-block; }
+
+/* Tailwind-like */
+.h-100px { height: 100px; }
