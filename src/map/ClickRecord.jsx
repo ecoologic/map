@@ -15,7 +15,10 @@ const onSelectFeature = (select, callback) => {
     })
 }
 
-export const ClickRecordContext = React.createContext([])
+export const ClickRecordContext = React.createContext([]);
+
+ClickRecordContext.emptyFeaturesData = { featuresData: [{}] };
+
 export const ClickRecordProvider = ({ children }) => {
     console.debug(`Render ClickRecordProvider`)
     const reducer = (state, action) => { // Could be done with useState
