@@ -30,12 +30,6 @@ export const useMount = (subjectName, mount, unmount = identity) => {
     React.useEffect(init, [])
 }
 
-// export const useToggle = (initialState) => {
-//     const [value, setValue] = React.useState(initialState);
-//     const toggle = () => setValue(!value);
-//     return { value, setValue, toggle };
-// }
-
 //////////////////////////////////////// Fetch
 
 export const useFetch = (url, options) => {
@@ -81,5 +75,37 @@ export const useSpinner = (startSpinning = false) => {
 
 export const Spinner = () => <i className="text-gray">Loading...</i>;
 
-// TODO: row exception catcher
-// TODO: row-map two way binding
+// export const useToggle = (initialState) => {
+//     const [value, setValue] = React.useState(initialState);
+//     const toggle = () => setValue(!value);
+//     return { value, setValue, toggle };
+// }
+
+
+////////////////////////////// Errors
+
+// // https://reactjs.org/docs/error-boundaries.html
+export class ErrorBoundary extends React.Component {
+    static getDerivedStateFromError(error) {
+        // Update state so the next render will show the fallback UI.
+        return { hasError: true };
+    }
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
+    componentDidCatch(error, errorInfo) {
+        // You can also log the error to an error reporting service
+        console.log(error, errorInfo);
+    }
+    render() {
+        if (this.state.hasError) {
+            // You can render any custom fallback UI
+            return <i>Something went wrong</i>;
+        } else {
+            return this.props.children;
+        }
+    }
+}
+
+// TODO: Event (or Log)

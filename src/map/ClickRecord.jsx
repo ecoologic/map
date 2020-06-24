@@ -1,6 +1,6 @@
 import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './Map';
-import {useMount} from "../utils";
+import {useMount, ErrorBoundary} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
 import {MapHoverContext} from "./Hover";
@@ -65,7 +65,11 @@ export const Records = () => {
         {records.map((record, i) =>
             <FeaturedTr key={`${i}-${record.featuresData[0].geometry.ol_uid}`}
                         olUid={record.featuresData[0].geometry.ol_uid}>
-                <td>{record.featuresData.map((fd) => fd.title).join(', ')}</td>
+                <ErrorBoundary td="1">
+                    <td>
+                        {record.featuresData.map((fd) => fd.title).join(', ')}
+                    </td>
+                </ErrorBoundary>
             </FeaturedTr>
         )}
     </tbody></table>
