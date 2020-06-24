@@ -1,6 +1,6 @@
 import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './Map';
-import {useMount} from "../utils";
+import {useMount, ErrorBoundary, Td} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
 import {MapHoverContext} from "./Hover";
@@ -50,6 +50,10 @@ export const useClickRecord = () => {
     return { records }
 }
 
+const TdContent = ({record}) => {
+    return record.featuresData.map((fd) => fd.title).join(', ')
+}
+
 // TODO: tr to map hover
 const FeaturedTr = ({ olUid, children }) => {
     console.debug(`Render FeaturedTr`)
@@ -65,7 +69,9 @@ export const Records = () => {
         {records.map((record, i) =>
             <FeaturedTr key={`${i}-${record.featuresData[0].geometry.ol_uid}`}
                         olUid={record.featuresData[0].geometry.ol_uid}>
-                <td>{record.featuresData.map((fd) => fd.title).join(', ')}</td>
+                <Td className='text-gray'>
+                    <TdContent record={record} />
+                </Td>
             </FeaturedTr>
         )}
     </tbody></table>
