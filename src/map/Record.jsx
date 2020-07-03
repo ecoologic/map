@@ -21,19 +21,9 @@ ClickRecordContext.emptyFeaturesData = { featuresData: [{}] };
 
 export const ClickRecordProvider = ({ children }) => {
   console.debug(`Render ClickRecordProvider`)
-  const reducer = (state, action) => { // TODO: Could be done with useState
-    switch (action.type) {
-      case 'CLICK':
-        return [...state, action.record]
-      case 'RESET':
-        return []
-      default:
-        return state
-    }
-  }
-  const [records, dispatch] = useReducer(reducer, [])
-  const addClickRecord = (record) => dispatch({ type: 'CLICK', record })
-  useShortcut('Escape', (_event) => dispatch({ type: 'RESET' }));
+  const [records, setRecords] = React.useState([]);
+  const addClickRecord = (newRecord) => setRecords((oldRecords) => [...oldRecords, newRecord])
+  useShortcut('Escape', (_event) => setRecords([]));
 
   const value = { records, addClickRecord }
   return <ClickRecordContext.Provider value={value}>{children}</ClickRecordContext.Provider>
@@ -53,7 +43,7 @@ export const useClickRecord = () => {
   return { records }
 }
 
-// TODO: must this be a component for ErrorBoundary to catch an error?
+// TODO? must this be a component for ErrorBoundary to catch an error?
 const Record = ({record}) => {
   return record.featuresData.map((fd) => fd.title).join(', ')
 }

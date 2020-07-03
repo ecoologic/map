@@ -13,7 +13,7 @@ export const ViewProvider = ({ children }) => {
   console.debug(`Render ViewProvider`)
   const { on } = useContext(MapContext)
 
-  const reducer = (state, action) => { // could be done with useState
+  const reducer = (state, action) => {
     switch (action.type) {
       case 'MOVE_END':
         return { ...state, center: state.view.getCenter() }
