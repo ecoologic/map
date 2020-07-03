@@ -1,6 +1,6 @@
 import React, {useContext, useReducer} from 'react';
 import {featureHelpers, MapContext} from './Map';
-import {useMount, ErrorBoundary, Td} from "../utils";
+import {useMount, Td, useShortcut} from "../utils";
 import Select from "ol/interaction/Select";
 import {click} from "ol/events/condition";
 import {MapHoverContext} from "./Hover";
@@ -21,16 +21,19 @@ ClickRecordContext.emptyFeaturesData = { featuresData: [{}] };
 
 export const ClickRecordProvider = ({ children }) => {
     console.debug(`Render ClickRecordProvider`)
-    const reducer = (state, action) => { // Could be done with useState
+    const reducer = (state, action) => { // TODO: Could be done with useState
         switch (action.type) {
             case 'CLICK':
                 return [...state, action.record]
+            case 'RESET':
+                return []
             default:
                 return state
         }
     }
     const [records, dispatch] = useReducer(reducer, [])
     const addClickRecord = (record) => dispatch({ type: 'CLICK', record })
+    useShortcut('Escape', (_event) => dispatch({ type: 'RESET' }));
 
     const value = { records, addClickRecord }
     return <ClickRecordContext.Provider value={value}>{children}</ClickRecordContext.Provider>
@@ -65,6 +68,7 @@ const FeaturedTr = ({ olUid, children }) => {
 export const Records = () => {
     console.debug(`Render Records`)
     const {records} = useClickRecord();
+
     return <table><tbody>
         {records.map((record, i) =>
             <FeaturedTr key={`${i}-${record.featuresData[0].geometry.ol_uid}`}
