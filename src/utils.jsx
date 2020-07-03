@@ -1,19 +1,8 @@
 import React from 'react'
 
-export const EVENT = {
-  record: (name, ...params) => {
-    switch(name) {
-      case 'ErrorBoundary#componentDidCatch':
-        console.info(name, params);
-        break;
-      case 'useMount-init':
-        console.debug('Mount   ', params);
-        break;
-      case 'useMount/unmount':
-        console.debug('UnMount ', params);
-        break;
-      default: console.info(name, params);
-    }
+export const EVENTS = {
+  error: (where, ...params) => {
+      console.info('Error', where, params);
   }
 }
 
@@ -47,7 +36,7 @@ export class ErrorBoundary extends React.Component {
     this.state = { hasError: false };
   }
   componentDidCatch(error, errorInfo) {
-    EVENT.record('ErrorBoundary#componentDidCatch', error, errorInfo)
+    EVENTS.error('ErrorBoundary#componentDidCatch', error, errorInfo)
   }
   render() {
     if (this.state.hasError) {
@@ -58,6 +47,7 @@ export class ErrorBoundary extends React.Component {
   }
 }
 
+
 ///////////////////////////// Td
 export const Td = ({children, ...props}) => {
   return <ErrorBoundary>
@@ -65,18 +55,20 @@ export const Td = ({children, ...props}) => {
   </ErrorBoundary>
 }
 
+
 ///////////////////////////// useMount
 export const useMount = (subjectName, mount, unmount = identity) => {
   const init = () => {
-    EVENT.record('useMount-init', subjectName)
+    console.debug('useMount-init', subjectName)
     mount()
     return () => {
-      EVENT.record('useMount/unmount', subjectName)
+      console.debug('useMount/unmount', subjectName)
       unmount()
     }
   }
   React.useEffect(init, [])
 }
+
 
 //////////////////////////////////////// useFetch
 export const useFetch = (url, options) => {
@@ -85,10 +77,10 @@ export const useFetch = (url, options) => {
     try {
       const rawResponse = await fetch(url, options);
       const responseJson = await rawResponse.json();
-      // EVENT.record('useFetch/catch', responseJson);
+      // console.info('useFetch/catch', responseJson);
       setResponse(responseJson);
     } catch (error) {
-      EVENT.record('useFetch/catch', error);
+      EVENTS.error('useFetch/catch', error);
       setResponse({ error });
     }
   };
@@ -96,6 +88,7 @@ export const useFetch = (url, options) => {
   React.useEffect(() => { whileSpinning(fetchData) }, [url, options]);
   return response;
 };
+
 
 ///////////////////////////// useSpinner
 export const SpinnerContext = React.createContext({});
@@ -122,12 +115,6 @@ export const useSpinner = (startSpinning = false) => {
 
 export const Spinner = () => <i className="text-gray">Loading...</i>;
 
-///////////////////////////// useToggle
-// export const useToggle = (initialState) => {
-//   const [value, setValue] = React.useState(initialState);
-//   const toggle = () => setValue(!value);
-//   return { value, setValue, toggle };
-// }
 
 ///////////////////////////// useShortcut
 export const useShortcut = (key, callback) => {
@@ -143,3 +130,11 @@ export const useShortcut = (key, callback) => {
     document.removeEventListener('keydown', handler);
   })
 }
+
+
+///////////////////////////// useToggle
+// export const useToggle = (initialState) => {
+//   const [value, setValue] = React.useState(initialState);
+//   const toggle = () => setValue(!value);
+//   return { value, setValue, toggle };
+// }
