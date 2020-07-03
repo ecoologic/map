@@ -6,19 +6,19 @@ import OSM from "ol/source/OSM";
 import {useMount} from "../utils";
 
 export const featureHelpers = {
-    properties: (withFeatures) => withFeatures.getFeatures()
-                                              .getArray()
-                                              .map(f => f.getProperties()),
-    // Ensures every layer feature has a "title" property
-    init: (features, data) => {
-        features.forEach((feature) => {
-            const field = {
-                cities: 'label',
-                countries: 'name'
-            }[data.layerName]
-            feature.setProperties({ ...data, title: feature.get(field) }, false)
-        })
-    }
+  properties: (withFeatures) => withFeatures.getFeatures()
+                       .getArray()
+                       .map(f => f.getProperties()),
+  // Ensures every layer feature has a "title" property
+  init: (features, data) => {
+    features.forEach((feature) => {
+      const field = {
+        cities: 'label',
+        countries: 'name'
+      }[data.layerName]
+      feature.setProperties({ ...data, title: feature.get(field) }, false)
+    })
+  }
 }
 
 const map = new Map({ target: null })
@@ -26,35 +26,35 @@ const openStreetMapLayer = new Tile({ source: new OSM() })
 
 export const MapContext = React.createContext({})
 export const MapProvider = ({ children }) => {
-    console.debug(`Render MapProvider`)
-    const on = (eventName, callback) => map.on(eventName, callback)
-    const featureForEvent = (olEvent) =>
-        map.forEachFeatureAtPixel(map.getEventPixel(olEvent.originalEvent),
-                                  (feature, _layer) => feature)
+  console.debug(`Render MapProvider`)
+  const on = (eventName, callback) => map.on(eventName, callback)
+  const featureForEvent = (olEvent) =>
+    map.forEachFeatureAtPixel(map.getEventPixel(olEvent.originalEvent),
+                 (feature, _layer) => feature)
 
-    const addInteraction = (select) => map.addInteraction(select)
-    const removeInteraction = (select) => map.removeInteraction(select)
+  const addInteraction = (select) => map.addInteraction(select)
+  const removeInteraction = (select) => map.removeInteraction(select)
 
-    const addLayer = (layer) => map.addLayer(layer)
-    const removeLayer = (layer) => map.removeLayer(layer)
+  const addLayer = (layer) => map.addLayer(layer)
+  const removeLayer = (layer) => map.removeLayer(layer)
 
-    const addControl = (control) => map.addControl(control)
-    const removeControl = (control) => map.removeControl(control)
+  const addControl = (control) => map.addControl(control)
+  const removeControl = (control) => map.removeControl(control)
 
-    map.setView(view)
-    addLayer(openStreetMapLayer)
+  map.setView(view)
+  addLayer(openStreetMapLayer)
 
-    useMount('MapProvider', () => {
-        map.setTarget('map')
-    })
+  useMount('MapProvider', () => {
+    map.setTarget('map')
+  })
 
-    const value = {
-        on, featureForEvent,
-        addLayer, removeLayer,
-        addControl, removeControl,
-        addInteraction, removeInteraction }
-    return <MapContext.Provider value={value}>
-        <div id="map" />
-        {children}
-    </MapContext.Provider>
+  const value = {
+    on, featureForEvent,
+    addLayer, removeLayer,
+    addControl, removeControl,
+    addInteraction, removeInteraction }
+  return <MapContext.Provider value={value}>
+    <div id="map" />
+    {children}
+  </MapContext.Provider>
 }

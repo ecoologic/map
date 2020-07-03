@@ -7,25 +7,25 @@ import {createStringXY} from "ol/coordinate";
 const undefinedHTML = '&nbsp;'
 
 const mousePosition = new MousePosition({
-    coordinateFormat: createStringXY(4),
-    undefinedHTML })
+  coordinateFormat: createStringXY(4),
+  undefinedHTML })
 
 export const MousePositionContext = React.createContext({ name: 'mouse', startVisible: true })
 export const MousePositionProvider = ({ children }) => {
-    console.debug(`Render MousePositionProvider`)
-    const { name, startVisible } = useContext(MousePositionContext)
-    const { addControl, removeControl } = useContext(MapContext)
-    const [isVisible, setIsVisible] = useState(!!startVisible)
-    const subject = mousePosition
-    const onChangeCallback = (newValue) => {
-        setIsVisible(newValue)
-        newValue ? addControl(subject) : removeControl(subject)
-    }
+  console.debug(`Render MousePositionProvider`)
+  const { name, startVisible } = useContext(MousePositionContext)
+  const { addControl, removeControl } = useContext(MapContext)
+  const [isVisible, setIsVisible] = useState(!!startVisible)
+  const subject = mousePosition
+  const onChangeCallback = (newValue) => {
+    setIsVisible(newValue)
+    newValue ? addControl(subject) : removeControl(subject)
+  }
 
-    useMount('MousePositionProvider', () => {
-        if (startVisible) addControl(subject)
-    }, () => removeControl(subject))
+  useMount('MousePositionProvider', () => {
+    if (startVisible) addControl(subject)
+  }, () => removeControl(subject))
 
-    const value = { name, isVisible, setIsVisible, onChangeCallback }
-    return <MousePositionContext.Provider value={value}>{children}</MousePositionContext.Provider>
+  const value = { name, isVisible, setIsVisible, onChangeCallback }
+  return <MousePositionContext.Provider value={value}>{children}</MousePositionContext.Provider>
 }

@@ -3,19 +3,19 @@ import React from 'react'
 export const identity = (args) => args
 
 export const ActivationCheckbox = ({context}) => {
-    const {name, isVisible, onChangeCallback} = React.useContext(context);
-    const onChange = (ev) => onChangeCallback(ev.target.checked);
+  const {name, isVisible, onChangeCallback} = React.useContext(context);
+  const onChange = (ev) => onChangeCallback(ev.target.checked);
 
-    return <label>
-        {name}:
-        <input type="checkbox" checked={isVisible} onChange={onChange}/>
-    </label>
+  return <label>
+    {name}:
+    <input type="checkbox" checked={isVisible} onChange={onChange}/>
+  </label>
 }
 
 export const ActivatableContext = ({Provider, Context}) => {
-    return <Provider context={Context}>
-        <p><ActivationCheckbox context={Context}/></p>
-    </Provider>
+  return <Provider context={Context}>
+    <p><ActivationCheckbox context={Context}/></p>
+  </Provider>
 }
 
 
@@ -43,87 +43,87 @@ export class ErrorBoundary extends React.Component {
 
 ///////////////////////////// Td
 export const Td = ({children, ...props}) => {
-    return <ErrorBoundary>
-        <td {...props}>{children}</td>
-    </ErrorBoundary>
+  return <ErrorBoundary>
+    <td {...props}>{children}</td>
+  </ErrorBoundary>
 }
 
 ///////////////////////////// useMount
 export const useMount = (subjectName, mount, unmount = identity) => {
-    const init = () => {
-        console.debug(`Mount  ${subjectName}`)
-        mount()
-        return () => {
-            console.debug(`Unmount ${subjectName}`)
-            unmount()
-        }
+  const init = () => {
+    console.debug(`Mount ${subjectName}`)
+    mount()
+    return () => {
+      console.debug(`Unmount ${subjectName}`)
+      unmount()
     }
-    React.useEffect(init, [])
+  }
+  React.useEffect(init, [])
 }
 
 //////////////////////////////////////// useFetch
 export const useFetch = (url, options) => {
-    const {whileSpinning} = React.useContext(SpinnerContext);
-    const fetchData = async () => {
-        try {
-            const rawResponse = await fetch(url, options);
-            const responseJson = await rawResponse.json();
-            setResponse(responseJson);
-        } catch (error) {
-            console.warn('fetch error', error);
-            setResponse({ error });
-        }
-    };
-    const [response, setResponse] = React.useState({});
-    React.useEffect(() => { whileSpinning(fetchData) }, [url, options]);
-    return response;
+  const {whileSpinning} = React.useContext(SpinnerContext);
+  const fetchData = async () => {
+    try {
+      const rawResponse = await fetch(url, options);
+      const responseJson = await rawResponse.json();
+      setResponse(responseJson);
+    } catch (error) {
+      console.warn('fetch error', error);
+      setResponse({ error });
+    }
+  };
+  const [response, setResponse] = React.useState({});
+  React.useEffect(() => { whileSpinning(fetchData) }, [url, options]);
+  return response;
 };
 
 ///////////////////////////// useSpinner
 export const SpinnerContext = React.createContext({});
 export const SpinnerProvider = ({ children }) => {
-    const { isSpinning, whileSpinning } = useSpinner();
+  const { isSpinning, whileSpinning } = useSpinner();
 
-    return <SpinnerContext.Provider value={{ isSpinning, whileSpinning }}>
-        {children}
-    </SpinnerContext.Provider>
+  return <SpinnerContext.Provider value={{ isSpinning, whileSpinning }}>
+    {children}
+  </SpinnerContext.Provider>
 }
 
 export const useSpinner = (startSpinning = false) => {
-    const [isSpinning, setIsSpinning] = React.useState(startSpinning);
-    const whileSpinning = async (callback) => {
-        try {
-            setIsSpinning(true)
-            return await callback()
-        } finally {
-            setIsSpinning(false)
-        }
+  const [isSpinning, setIsSpinning] = React.useState(startSpinning);
+  const whileSpinning = async (callback) => {
+    try {
+      setIsSpinning(true)
+      return await callback()
+    } finally {
+      setIsSpinning(false)
     }
-    return { isSpinning, whileSpinning }
+  }
+  return { isSpinning, whileSpinning }
 }
 
 export const Spinner = () => <i className="text-gray">Loading...</i>;
 
 ///////////////////////////// useToggle
 // export const useToggle = (initialState) => {
-//     const [value, setValue] = React.useState(initialState);
-//     const toggle = () => setValue(!value);
-//     return { value, setValue, toggle };
+//   const [value, setValue] = React.useState(initialState);
+//   const toggle = () => setValue(!value);
+//   return { value, setValue, toggle };
 // }
 
-///////////////////////////// useShortcuts
+///////////////////////////// useShortcut
 export const useShortcut = (key, callback) => {
-    const handler = (event) => {
-        if(key === event.key) {
-            event.preventDefault();
-            callback(event);
-        }
+  const handler = (event) => {
+    if(key === event.key) {
+      event.preventDefault();
+      callback(event);
     }
-    useMount('useShortcut', () => {
-        document.addEventListener('keydown', handler);
-    }, () => {
-        document.removeEventListener('keydown', handler);
-    })
+  }
+  useMount('useShortcut', () => {
+    document.addEventListener('keydown', handler);
+  }, () => {
+    document.removeEventListener('keydown', handler);
+  })
 }
 
 

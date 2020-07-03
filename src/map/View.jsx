@@ -10,32 +10,32 @@ export const view = new View({ center: fromLonLat(initialLonLat), zoom: 3 });
 
 export const ViewContext = React.createContext({})
 export const ViewProvider = ({ children }) => {
-    console.debug(`Render ViewProvider`)
-    const { on } = useContext(MapContext)
+  console.debug(`Render ViewProvider`)
+  const { on } = useContext(MapContext)
 
-    const reducer = (state, action) => { // could be done with useState
-        switch (action.type) {
-            case 'MOVE_END':
-                return { ...state, center: state.view.getCenter() }
-            default:
-                return state
-        }
+  const reducer = (state, action) => { // could be done with useState
+    switch (action.type) {
+      case 'MOVE_END':
+        return { ...state, center: state.view.getCenter() }
+      default:
+        return state
     }
+  }
 
-    const center = view.getCenter()
-    const moveEnd = () => dispatch({ type: 'MOVE_END' })
+  const center = view.getCenter()
+  const moveEnd = () => dispatch({ type: 'MOVE_END' })
 
-    const [value, dispatch] = useReducer(reducer, { view, center, moveEnd })
+  const [value, dispatch] = useReducer(reducer, { view, center, moveEnd })
 
-    useMount('ViewProvider', () => { on('moveend', moveEnd) })
+  useMount('ViewProvider', () => { on('moveend', moveEnd) })
 
-    return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
+  return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
 }
 
 export const ViewCenter = () => {
-    console.debug(`Render ViewCenter`)
-    const {center} = useContext(ViewContext);
-    const [x, y] = center.map((n) => Math.round(n * 10000) / 10000);
+  console.debug(`Render ViewCenter`)
+  const {center} = useContext(ViewContext);
+  const [x, y] = center.map((n) => Math.round(n * 10000) / 10000);
 
-    return <div>View Center: {x}, {y}</div>
+  return <div>View Center: {x}, {y}</div>
 }
