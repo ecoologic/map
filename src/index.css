@@ -19,9 +19,17 @@ code {
   color: white;
 }
 
+.flag--missing {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100px;
+
+}
+
 /* Tailwind */
 .inline-block	{ display: inline-block; }
-.text-gray-600	{ color: #718096 };
+.text-gray-600	{ color: #718096; };
+.block { display: block; };
 
 /* Tailwind-like */
 .h-100px { height: 100px; }

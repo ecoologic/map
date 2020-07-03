@@ -2,6 +2,7 @@ import React from 'react'
 import { useFetch, SpinnerContext, Spinner } from "./utils";
 import { ClickRecordContext } from './map/Record';
 
+// TODO: height not perfect, "loading" no height
 export const Flag = () => {
   const {records} = React.useContext(ClickRecordContext);
   const record = records[records.length - 1] || ClickRecordContext.emptyFeaturesData;
@@ -13,5 +14,5 @@ export const Flag = () => {
     ? <Spinner />
     : response[0]
       ? <img src={response[0]?.flag} alt={`${country.name} flag`} height="100px" />
-      : <span className="h-100px inline-block">{response.error || response.message}</span>
+      : <i className="flag flag--missing">{response.error || response.message}</i>
 }
