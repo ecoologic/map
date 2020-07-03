@@ -108,4 +108,25 @@ export class ErrorBoundary extends React.Component {
     }
 }
 
+////////////////////////////////////// Shortcuts
+
+
+// TODO: pupups
+// TODO: service workers!
+
+export const useShortcut = (key, callback) => {
+    const handler = (event) => {
+        if(key === event.key) {
+            event.preventDefault();
+            callback(event);
+        }
+    }
+    useMount('useShortcut', () => {
+        document.addEventListener('keydown', handler);
+    }, () => {
+        document.removeEventListener('keydown', handler);
+    })
+}
+
+
 // TODO: Event (or Log)
