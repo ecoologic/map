@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react';
+import React, {useContext} from 'react';
 import {featureHelpers, MapContext} from './Map';
 import {useMount, Td, useShortcut} from "../utils";
 import Select from "ol/interaction/Select";
@@ -50,7 +50,10 @@ const Record = ({record}) => {
 const FeaturedTr = ({ olUid, children }) => {
   const hoveredOlUid = useContext(MapHoverContext).featureData?.geometry?.ol_uid;
   const hoveredOnMap = hoveredOlUid === olUid;
-  return <tr className={hoveredOnMap ? 'highlighted' : '' }>{children}</tr>
+  const className = 'highlightedOnHover ' + (hoveredOnMap ? 'highlighted' : '');
+  return <tr className={className}>
+    {children}
+  </tr>
 }
 
 export const Records = () => {
