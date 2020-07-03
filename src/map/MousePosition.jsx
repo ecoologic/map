@@ -12,7 +12,6 @@ const mousePosition = new MousePosition({
 
 export const MousePositionContext = React.createContext({ name: 'mouse', startVisible: true })
 export const MousePositionProvider = ({ children }) => {
-  console.debug(`Render MousePositionProvider`)
   const { name, startVisible } = useContext(MousePositionContext)
   const { addControl, removeControl } = useContext(MapContext)
   const [isVisible, setIsVisible] = useState(!!startVisible)

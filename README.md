@@ -4,8 +4,10 @@
 * TODO: pass params from provider
 * TODO: import paths relative to root
 * TODO: why I need to define every function in MapProvider?
-* TODO: licence
 * TODO: some CSS FFS
+* TODO: pupups
+* TODO: service workers!
+
 
 # A Map App
 

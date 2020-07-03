@@ -20,7 +20,6 @@ export const ClickRecordContext = React.createContext([]);
 ClickRecordContext.emptyFeaturesData = { featuresData: [{}] };
 
 export const ClickRecordProvider = ({ children }) => {
-  console.debug(`Render ClickRecordProvider`)
   const [records, setRecords] = React.useState([]);
   const addClickRecord = (newRecord) => setRecords((oldRecords) => [...oldRecords, newRecord])
   useShortcut('Escape', (_event) => setRecords([]));
@@ -30,7 +29,6 @@ export const ClickRecordProvider = ({ children }) => {
 }
 
 export const useClickRecord = () => {
-  console.debug(`Render useClickRecord`)
   const { addInteraction, removeInteraction } = useContext(MapContext)
   const { records, addClickRecord } = useContext(ClickRecordContext)
   const select = clickSelect
@@ -50,14 +48,12 @@ const Record = ({record}) => {
 
 // TODO: tr to map hover
 const FeaturedTr = ({ olUid, children }) => {
-  console.debug(`Render FeaturedTr`)
   const hoveredOlUid = useContext(MapHoverContext).featureData?.geometry?.ol_uid;
   const hoveredOnMap = hoveredOlUid === olUid;
   return <tr className={hoveredOnMap ? 'highlighted' : '' }>{children}</tr>
 }
 
 export const Records = () => {
-  console.debug(`Render Records`)
   const {records} = useClickRecord();
 
   return <table><tbody>

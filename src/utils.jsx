@@ -1,5 +1,22 @@
 import React from 'react'
 
+export const EVENT = {
+  record: (name, ...params) => {
+    switch(name) {
+      case 'ErrorBoundary#componentDidCatch':
+        console.info(name, params);
+        break;
+      case 'useMount-init':
+        console.debug('Mount   ', params);
+        break;
+      case 'useMount/unmount':
+        console.debug('UnMount ', params);
+        break;
+      default: console.info(name, params);
+    }
+  }
+}
+
 export const identity = (args) => args
 
 export const ActivationCheckbox = ({context}) => {
@@ -30,7 +47,7 @@ export class ErrorBoundary extends React.Component {
     this.state = { hasError: false };
   }
   componentDidCatch(error, errorInfo) {
-    console.log('>>>>>>>>>>>>> error', error, errorInfo);
+    EVENT.record('ErrorBoundary#componentDidCatch', error, errorInfo)
   }
   render() {
     if (this.state.hasError) {
@@ -51,10 +68,10 @@ export const Td = ({children, ...props}) => {
 ///////////////////////////// useMount
 export const useMount = (subjectName, mount, unmount = identity) => {
   const init = () => {
-    console.debug(`Mount ${subjectName}`)
+    EVENT.record('useMount-init', subjectName)
     mount()
     return () => {
-      console.debug(`Unmount ${subjectName}`)
+      EVENT.record('useMount/unmount', subjectName)
       unmount()
     }
   }
@@ -68,9 +85,10 @@ export const useFetch = (url, options) => {
     try {
       const rawResponse = await fetch(url, options);
       const responseJson = await rawResponse.json();
+      // EVENT.record('useFetch/catch', responseJson);
       setResponse(responseJson);
     } catch (error) {
-      console.warn('fetch error', error);
+      EVENT.record('useFetch/catch', error);
       setResponse({ error });
     }
   };
@@ -125,8 +143,3 @@ export const useShortcut = (key, callback) => {
     document.removeEventListener('keydown', handler);
   })
 }
-
-
-// TODO: Event (or Log)
-// TODO: pupups
-// TODO: service workers!
