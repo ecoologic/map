@@ -83,17 +83,33 @@ const safeFetch = async (url, options) => {
     return { error };
   }
 };
+const cachedFetchedResponses = {};
+const cachedFetch = async (url, options) => {
+  return await safeFetch(url, options);
+}
+
 export const useFetch = (url, options) => {
   const {whileSpinning} = React.useContext(SpinnerContext);
   const [response, setResponse] = React.useState({});
   React.useEffect(() => {
     whileSpinning(async () => {
-      const response = await safeFetch(url, options);
+      const response = await cachedFetch(url, options);
       setResponse(response);
     })
   }, [url, options]);
   return response;
 };
+// export const useFetch = (url, options) => {
+//   const {whileSpinning} = React.useContext(SpinnerContext);
+//   const [response, setResponse] = React.useState({});
+//   React.useEffect(() => {
+//     whileSpinning(async () => {
+//       const response = await safeFetch(url, options);
+//       setResponse(response);
+//     })
+//   }, [url, options]);
+//   return response;
+// };
 
 
 ///////////////////////////// useSpinner
