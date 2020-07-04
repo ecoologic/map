@@ -71,21 +71,27 @@ export const useMount = (subjectName, mount, unmount = identity) => {
 
 
 //////////////////////////////////////// useFetch
+const safeFetch = async (url, options) => {
+  try {
+    const rawResponse = await fetch(url, options);
+    console.info('useFetch', url, options);
+    const responseJson = await rawResponse.json();
+    // console.info('useFetch response', url, options, responseJson);
+    return responseJson;
+  } catch (error) {
+    EVENTS.error('useFetch/catch', error);
+    return { error };
+  }
+};
 export const useFetch = (url, options) => {
   const {whileSpinning} = React.useContext(SpinnerContext);
-  const fetchData = async () => {
-    try {
-      const rawResponse = await fetch(url, options);
-      const responseJson = await rawResponse.json();
-      // console.info('useFetch/catch', responseJson);
-      setResponse(responseJson);
-    } catch (error) {
-      EVENTS.error('useFetch/catch', error);
-      setResponse({ error });
-    }
-  };
   const [response, setResponse] = React.useState({});
-  React.useEffect(() => { whileSpinning(fetchData) }, [url, options]);
+  React.useEffect(() => {
+    whileSpinning(async () => {
+      const response = await safeFetch(url, options);
+      setResponse(response);
+    })
+  }, [url, options]);
   return response;
 };
 
