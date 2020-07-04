@@ -93,28 +93,18 @@ const cachedFetch = async (url, options) => {
     return (cachedFetchedResponses[key] = await safeFetch(url, options));
   }
 };
-export const useFetch = (url, options) => {
+const useSpinningFetch = (url, options, whichFetch = safeFetch) => {
   const {whileSpinning} = React.useContext(SpinnerContext);
   const [response, setResponse] = React.useState({});
   React.useEffect(() => {
     whileSpinning(async () => {
-      const response = await safeFetch(url, options);
-      setResponse(response);
+      setResponse(await whichFetch(url, options));
     })
   }, [url, options]);
   return response;
 };
-export const useCachedFetch = (url, options) => {
-  const {whileSpinning} = React.useContext(SpinnerContext);
-  const [response, setResponse] = React.useState({});
-  React.useEffect(() => {
-    whileSpinning(async () => {
-      const response = await cachedFetch(url, options);
-      setResponse(response);
-    })
-  }, [url, options]);
-  return response;
-};
+export const useFetch = (url, options) => useSpinningFetch(url, options);
+export const useCachedFetch = (url, options) => useSpinningFetch(url, options, cachedFetch);
 
 
 ///////////////////////////// useSpinner
