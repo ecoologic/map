@@ -1,9 +1,14 @@
 import React from 'react'
 
+// Now only logging, but can send to Rollbar, Intercom, PWA notifications etc.
+// Can also be used as indirection for other browser functionality
 export const EVENTS = {
   error: (where, ...params) => {
       console.info('Error', where, params);
-  }
+  },
+  clearFetchedResponses: () => {
+      console.info('clearFetchedResponses');
+  },
 }
 
 export const identity = (args) => args
@@ -27,6 +32,8 @@ export const ActivatableContext = ({Provider, Context}) => {
 
 ///////////////////////////// ErrorBoundary
 // https://reactjs.org/docs/error-boundaries.html
+// Error must be thrown in a component inside ErrorBoundary,
+// not in the render that also renders ErrorBoundary
 export class ErrorBoundary extends React.Component {
   static getDerivedStateFromError(error) {
     return { hasError: true };
@@ -83,8 +90,15 @@ const safeFetch = async (url, options) => {
     return { error };
   }
 };
-const cachedFetchedResponses = {};
+let cachedFetchedResponses = {};
+const resetBigFetchedResponses = () => {
+  if (Object.keys(cachedFetchedResponses).length > 3) {
+    EVENTS.clearFetchedResponses();
+    cachedFetchedResponses = {}; // Let GC do the job
+  }
+};
 const cachedFetch = async (url, options) => {
+  resetBigFetchedResponses();
   const key = [url, options].join('|');
   if (cachedFetchedResponses[key]) {
     console.info('cachedFetch', url, options);
