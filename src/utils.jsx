@@ -85,7 +85,13 @@ const safeFetch = async (url, options) => {
 };
 const cachedFetchedResponses = {};
 const cachedFetch = async (url, options) => {
-  return await safeFetch(url, options);
+  const key = [url, options].join('|');
+  if (cachedFetchedResponses[key]) {
+    console.info('cachedFetch', url, options);
+    return await Promise.resolve(cachedFetchedResponses[key]);
+  } else {
+    return (cachedFetchedResponses[key] = await safeFetch(url, options));
+  }
 }
 
 export const useFetch = (url, options) => {
